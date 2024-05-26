@@ -60,7 +60,11 @@ func main() {
     r.HandleFunc("/api/profile/fridge-items/{itemID}", utils.ValidateTokenMiddleware(handlers.DeleteFridgeItemHandler)).Methods("DELETE")
     r.HandleFunc("/api/profile/fridge-recipes", utils.ValidateTokenMiddleware(handlers.GetRecipesByFridgeItemsHandler)).Methods("GET")
     r.HandleFunc("/api/carousel-recipes", handlers.GetCarouselRecipes).Methods("GET")
-
+    
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = "8080"
+    }
     log.Fatal(http.ListenAndServe(":8080", r))
 }
 
